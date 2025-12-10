@@ -46,4 +46,19 @@ router.post('/reg_funcionario', upload.single("documento"), async (req, res) => 
   }
 })
 
+router.delete('/delete_funcionario/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const response = await FuncionarioModel.deleteOne({ _id: id });
+    if (response) {
+      return res.status(200).json({ message: 'Usuário deletado com sucesso' });
+    } else {
+      return res.status(404).json({ message: 'Funcionário não encontrado' });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro interno do servidor', error: error.message });
+  }
+})
+
 export default router;
